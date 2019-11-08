@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cluecumber.exceptions.filesystem;
+package com.trivago.cluecumber.exceptions.filesystem;
 
 import com.trivago.cluecumberCore.exceptions.filesystem.PathCreationException;
 import org.junit.Test;

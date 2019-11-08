@@ -1,4 +1,4 @@
-package cluecumber.json;
+package com.trivago.cluecumber.json;
 
 import com.trivago.cluecumberCore.constants.Status;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;

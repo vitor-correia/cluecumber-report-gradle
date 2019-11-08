@@ -1,4 +1,4 @@
-package cluecumber.rendering;
+package com.trivago.cluecumber.rendering;
 
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.filesystem.FileSystemManager;

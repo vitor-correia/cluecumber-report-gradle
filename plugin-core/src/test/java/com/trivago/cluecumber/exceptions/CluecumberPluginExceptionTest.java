@@ -1,4 +1,4 @@
-package cluecumber.exceptions;
+package com.trivago.cluecumber.exceptions;
 
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import org.junit.Test;

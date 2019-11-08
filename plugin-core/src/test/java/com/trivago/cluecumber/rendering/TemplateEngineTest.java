@@ -1,4 +1,4 @@
-package cluecumber.rendering;
+package com.trivago.cluecumber.rendering;
 
 import com.trivago.cluecumberCore.rendering.pages.renderering.*;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateConfiguration;

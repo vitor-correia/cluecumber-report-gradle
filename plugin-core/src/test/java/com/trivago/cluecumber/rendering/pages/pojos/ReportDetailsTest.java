@@ -1,4 +1,4 @@
-package cluecumber.rendering.pages.pojos;
+package com.trivago.cluecumber.rendering.pages.pojos;
 
 import com.trivago.cluecumberCore.rendering.pages.pojos.ReportDetails;
 import org.hamcrest.MatcherAssert;

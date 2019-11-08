@@ -1,4 +1,4 @@
-package cluecumber.rendering.pages.renderering;
+package com.trivago.cluecumber.rendering.pages.renderering;
 
 import com.trivago.cluecumberCore.constants.ChartConfiguration;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;

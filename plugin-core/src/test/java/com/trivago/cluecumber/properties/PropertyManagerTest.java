@@ -1,4 +1,4 @@
-package cluecumber.properties;
+package com.trivago.cluecumber.properties;
 
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.exceptions.filesystem.MissingFileException;

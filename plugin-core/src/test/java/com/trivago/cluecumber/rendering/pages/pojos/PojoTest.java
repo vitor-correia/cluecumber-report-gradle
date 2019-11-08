@@ -1,4 +1,4 @@
-package cluecumber.rendering.pages.pojos;
+package com.trivago.cluecumber.rendering.pages.pojos;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.filters.FilterPackageInfo;

@@ -1,4 +1,4 @@
-package cluecumber.rendering.pages.pojos.pagecollections;
+package com.trivago.cluecumber.rendering.pages.pojos.pagecollections;
 
 import com.trivago.cluecumberCore.constants.Status;
 import com.trivago.cluecumberCore.json.pojo.*;

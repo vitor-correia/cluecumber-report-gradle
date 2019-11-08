@@ -1,4 +1,4 @@
-package cluecumber.json.processors;
+package com.trivago.cluecumber.json.processors;
 
 import com.trivago.cluecumberCore.constants.MimeType;
 import com.trivago.cluecumberCore.filesystem.FileIO;

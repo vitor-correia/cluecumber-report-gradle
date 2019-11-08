@@ -1,4 +1,4 @@
-package cluecumber;
+package com.trivago.cluecumber;
 
 import com.trivago.cluecumber.CluecumberReportPlugin;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;

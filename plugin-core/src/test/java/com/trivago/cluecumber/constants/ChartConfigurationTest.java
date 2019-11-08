@@ -1,4 +1,4 @@
-package cluecumber.constants;
+package com.trivago.cluecumber.constants;
 
 import com.trivago.cluecumberCore.constants.ChartConfiguration;
 import com.trivago.cluecumberCore.properties.PropertyManager;

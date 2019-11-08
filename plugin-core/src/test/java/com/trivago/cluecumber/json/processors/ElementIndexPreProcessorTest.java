@@ -1,4 +1,4 @@
-package cluecumber.json.processors;
+package com.trivago.cluecumber.json.processors;
 
 import com.trivago.cluecumberCore.json.pojo.Element;
 import com.trivago.cluecumberCore.json.pojo.Report;

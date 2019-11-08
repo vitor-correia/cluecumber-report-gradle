@@ -1,4 +1,4 @@
-package cluecumber.files;
+package com.trivago.cluecumber.files;
 
 import com.trivago.cluecumberCore.exceptions.filesystem.FileCreationException;
 import com.trivago.cluecumberCore.exceptions.filesystem.MissingFileException;

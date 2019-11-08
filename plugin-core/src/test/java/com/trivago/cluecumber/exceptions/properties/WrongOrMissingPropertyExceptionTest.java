@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cluecumber.exceptions.properties;
+package com.trivago.cluecumber.exceptions.properties;
 
 import com.trivago.cluecumberCore.exceptions.properties.WrongOrMissingPropertyException;
 import org.junit.Test;

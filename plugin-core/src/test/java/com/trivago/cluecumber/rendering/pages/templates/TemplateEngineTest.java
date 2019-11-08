@@ -1,4 +1,4 @@
-package cluecumber.rendering.pages.templates;
+package com.trivago.cluecumber.rendering.pages.templates;
 
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateConfiguration;

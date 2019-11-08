@@ -1,4 +1,4 @@
-package cluecumber.rendering.pages.visitors;
+package com.trivago.cluecumber.rendering.pages.visitors;
 
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.filesystem.FileIO;

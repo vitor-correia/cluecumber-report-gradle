@@ -1,4 +1,4 @@
-package cluecumber.json.pojo;
+package com.trivago.cluecumber.json.pojo;
 
 import com.trivago.cluecumberCore.constants.MimeType;
 import com.trivago.cluecumberCore.json.pojo.Embedding;

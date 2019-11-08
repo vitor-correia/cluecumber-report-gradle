@@ -1,4 +1,4 @@
-package cluecumber.logging;
+package com.trivago.cluecumber.logging;
 
 import com.trivago.cluecumberCore.logging.CluecumberLogger;
 import org.apache.maven.plugin.logging.Log;
