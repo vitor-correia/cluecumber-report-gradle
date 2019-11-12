@@ -24,6 +24,7 @@ import com.trivago.cluecumberCore.json.pojo.Element;
 import com.trivago.cluecumberCore.json.pojo.Embedding;
 import com.trivago.cluecumberCore.json.pojo.ResultMatch;
 import com.trivago.cluecumberCore.json.pojo.Step;
+import com.trivago.cluecumberCore.logging.BaseLogger;
 import com.trivago.cluecumberCore.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import io.gsonfire.PostProcessor;
@@ -39,7 +40,7 @@ public class ElementJsonPostProcessor implements PostProcessor<Element> {
 
     private final PropertyManager propertyManager;
     private final FileIO fileIO;
-    private final CluecumberLogger logger;
+    private final BaseLogger logger;
 
     private int attachmentIndex = 1;
 
@@ -47,7 +48,7 @@ public class ElementJsonPostProcessor implements PostProcessor<Element> {
     public ElementJsonPostProcessor(
             final PropertyManager propertyManager,
             final FileIO fileIO,
-            final CluecumberLogger logger
+            final BaseLogger logger
     ) {
         this.propertyManager = propertyManager;
         this.fileIO = fileIO;

@@ -20,6 +20,7 @@ import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.exceptions.filesystem.MissingFileException;
 import com.trivago.cluecumberCore.exceptions.properties.WrongOrMissingPropertyException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
+import com.trivago.cluecumberCore.logging.BaseLogger;
 import com.trivago.cluecumberCore.logging.CluecumberLogger;
 
 import javax.inject.Inject;
@@ -28,15 +29,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static com.trivago.cluecumberCore.logging.CluecumberLogger.CluecumberLogLevel.COMPACT;
-import static com.trivago.cluecumberCore.logging.CluecumberLogger.CluecumberLogLevel.DEFAULT;
+import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.COMPACT;
+import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.DEFAULT;
 
 @Singleton
 public class PropertyManager {
 
     private static final String COLOR_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
 
-    private final CluecumberLogger logger;
+    private final BaseLogger logger;
     private final FileIO fileIO;
     private final PropertiesFileLoader propertiesFileLoader;
 
@@ -59,7 +60,7 @@ public class PropertyManager {
 
     @Inject
     public PropertyManager(
-            final CluecumberLogger logger,
+            final BaseLogger logger,
             FileIO fileIO,
             final PropertiesFileLoader propertiesFileLoader
     ) {

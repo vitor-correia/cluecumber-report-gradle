@@ -4,6 +4,7 @@ import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.exceptions.filesystem.MissingFileException;
 import com.trivago.cluecumberCore.exceptions.properties.WrongOrMissingPropertyException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
+import com.trivago.cluecumberCore.logging.BaseLogger;
 import com.trivago.cluecumberCore.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertiesFileLoader;
 import com.trivago.cluecumberCore.properties.PropertyManager;
@@ -22,13 +23,13 @@ import static org.mockito.Mockito.*;
 
 public class PropertyManagerTest {
     private PropertyManager propertyManager;
-    private CluecumberLogger logger;
+    private BaseLogger logger;
     private FileIO fileIO;
     private PropertiesFileLoader propertiesFileLoader;
 
     @Before
     public void setup() {
-        logger = mock(CluecumberLogger.class);
+        logger = mock(BaseLogger.class);
         fileIO = mock(FileIO.class);
         propertiesFileLoader = new PropertiesFileLoader(fileIO);
         propertyManager = new PropertyManager(logger, fileIO, propertiesFileLoader);
@@ -60,10 +61,10 @@ public class PropertyManagerTest {
     public void logBasePropertiesTest() {
         propertyManager.logProperties();
         verify(logger, times(2)).info(anyString(),
-                eq(CluecumberLogger.CluecumberLogLevel.DEFAULT),
-                eq(CluecumberLogger.CluecumberLogLevel.COMPACT));
+                eq(BaseLogger.CluecumberLogLevel.DEFAULT),
+                eq(BaseLogger.CluecumberLogLevel.COMPACT));
         verify(logger, times(6)).info(anyString(),
-                eq(CluecumberLogger.CluecumberLogLevel.DEFAULT));
+                eq(BaseLogger.CluecumberLogLevel.DEFAULT));
     }
 
     @Test
@@ -196,9 +197,9 @@ public class PropertyManagerTest {
 
         propertyManager.logProperties();
         verify(logger, times(2)).info(anyString(),
-                eq(CluecumberLogger.CluecumberLogLevel.DEFAULT),
-                eq(CluecumberLogger.CluecumberLogLevel.COMPACT));
+                eq(BaseLogger.CluecumberLogLevel.DEFAULT),
+                eq(BaseLogger.CluecumberLogLevel.COMPACT));
         verify(logger, times(9)).info(anyString(),
-                eq(CluecumberLogger.CluecumberLogLevel.DEFAULT));
+                eq(BaseLogger.CluecumberLogLevel.DEFAULT));
     }
 }

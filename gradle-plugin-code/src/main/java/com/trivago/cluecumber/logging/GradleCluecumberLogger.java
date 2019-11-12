@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.trivago.cluecumberCore.logging;
+package com.trivago.cluecumber.logging;
 
-import org.apache.maven.plugin.logging.Log;
+import org.gradle.
 
 import javax.inject.Singleton;
 import java.util.Arrays;
 
 @Singleton
-public class CluecumberLogger extends BaseLogger {
+public class CluecumberLogger {
 
     private Log mojoLogger;
     private CluecumberLogLevel currentLogLevel;
@@ -33,9 +33,8 @@ public class CluecumberLogger extends BaseLogger {
      * @param mojoLogger      The current {@link Log}.
      * @param currentLogLevel the log level that the logger should react to.
      */
-    @Override
-    public void initialize(final Object mojoLogger, final String currentLogLevel) {
-        this.mojoLogger = (Log) mojoLogger;
+    public void initialize(final Log mojoLogger, final String currentLogLevel) {
+        this.mojoLogger = mojoLogger;
         if (currentLogLevel == null) {
             this.currentLogLevel = CluecumberLogLevel.DEFAULT;
             return;
@@ -49,14 +48,38 @@ public class CluecumberLogger extends BaseLogger {
         }
     }
 
+    public void logInfoSeparator(final CluecumberLogLevel... cluecumberLogLevels) {
+        info("------------------------------------------------------------------------", cluecumberLogLevels);
+    }
+
+    /**
+     * Info logging based on the provided Cluecumber log levels.
+     *
+     * @param logString           The {@link String} to be logged.
+     * @param cluecumberLogLevels The log levels ({@link CluecumberLogLevel} list) in which the message should be displayed.
+     */
+    public void info(final CharSequence logString, CluecumberLogLevel... cluecumberLogLevels) {
+        log(LogLevel.INFO, logString, cluecumberLogLevels);
+    }
+
+    /**
+     * Warn logging. This is always displayed unless logging is off.
+     *
+     * @param logString The {@link String} to be logged.
+     */
+    public void warn(final CharSequence logString) {
+        CluecumberLogLevel[] logLevels =
+                new CluecumberLogLevel[]{CluecumberLogLevel.DEFAULT, CluecumberLogLevel.COMPACT, CluecumberLogLevel.MINIMAL};
+        log(LogLevel.WARN, logString, logLevels);
+    }
+
     /**
      * Logs a message based on the provided log levels.
      *
      * @param logString           The {@link String} to be logged.
-     * @param CluecumberLogLevels The log levels ({@link CluecumberLogger} list) in which the message should be displayed.
+     * @param CluecumberLogLevels The log levels ({@link com.trivago.cluecumberCore.logging.CluecumberLogger} list) in which the message should be displayed.
      */
-    @Override
-    protected void log(final LogLevel logLevel, final String logString, CluecumberLogLevel... CluecumberLogLevels) {
+    private void log(final LogLevel logLevel, final CharSequence logString, CluecumberLogLevel... CluecumberLogLevels) {
         if (currentLogLevel == CluecumberLogLevel.OFF) {
             return;
         }
@@ -78,5 +101,11 @@ public class CluecumberLogger extends BaseLogger {
         }
     }
 
+    private enum LogLevel {
+        INFO, WARN
+    }
 
+    public enum CluecumberLogLevel {
+        DEFAULT, COMPACT, MINIMAL, OFF
+    }
 }

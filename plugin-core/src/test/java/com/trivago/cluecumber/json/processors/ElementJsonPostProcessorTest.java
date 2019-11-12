@@ -7,6 +7,7 @@ import com.trivago.cluecumberCore.json.pojo.Embedding;
 import com.trivago.cluecumberCore.json.pojo.ResultMatch;
 import com.trivago.cluecumberCore.json.pojo.Step;
 import com.trivago.cluecumberCore.json.processors.ElementJsonPostProcessor;
+import com.trivago.cluecumberCore.logging.BaseLogger;
 import com.trivago.cluecumberCore.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import org.junit.Before;
@@ -26,7 +27,7 @@ public class ElementJsonPostProcessorTest {
     public void setup() {
         PropertyManager propertyManager = mock(PropertyManager.class);
         FileIO fileIO = mock(FileIO.class);
-        CluecumberLogger logger = new CluecumberLogger();
+        BaseLogger logger = new CluecumberLogger();
         elementJsonPostProcessor = new ElementJsonPostProcessor(propertyManager, fileIO, logger);
     }
 
