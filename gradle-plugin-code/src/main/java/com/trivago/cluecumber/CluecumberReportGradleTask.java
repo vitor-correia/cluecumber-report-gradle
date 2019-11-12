@@ -1,4 +1,4 @@
-/*
+package com.trivago.cluecumber;/*
  * Copyright 2019 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import com.trivago.cluecumber.logging.GradleCluecumberLogger;
 
 import com.trivago.cluecumberCore.constants.PluginSettings;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
@@ -23,15 +24,16 @@ import com.trivago.cluecumberCore.json.pojo.Report;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
 import com.trivago.cluecumberCore.json.processors.ElementJsonPostProcessor;
 import com.trivago.cluecumberCore.json.processors.ReportJsonPostProcessor;
-import com.trivago.cluecumberCore.logging.GradleCluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertiesFileLoader;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
 import com.trivago.cluecumberCore.rendering.pages.charts.ChartJsonConverter;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
+import com.trivago.cluecumberCore.rendering.pages.renderering.*;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateConfiguration;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
 import com.trivago.cluecumberCore.constants.ChartConfiguration;
+import com.trivago.cluecumberCore.rendering.pages.visitors.*;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
