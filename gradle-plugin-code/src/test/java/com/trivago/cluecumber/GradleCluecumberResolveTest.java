@@ -52,31 +52,6 @@ public class GradleCluecumberResolveTest {
                         "        }\n" +
                         "    }\n" +
                         "}\n" +
-                        "repositories {\n" +
-                        "    jcenter()\n" +
-                        "    mavenLocal()\n" +
-                        "    mavenCentral()\n" +
-                        "}\n" +
-                        "dependencies {  \n" +
-                        "    implementation 'com.trivago.rta:cluecumber-plugin-core:2.3.2'\n" +
-                        "    implementation 'org.apache.maven.plugin-tools:maven-plugin-annotations:3.6.0'\n" +
-                        "    implementation 'org.apache.maven:maven-plugin-api:3.6.1'\n" +
-                        "    implementation 'com.google.code.gson:gson:2.8.5'\n" +
-                        "    implementation 'io.gsonfire:gson-fire:1.9.0-alpha1'\n" +
-                        "    implementation 'org.apache.kafka:kafka_2.11:2.2.0'\n" +
-                        "    implementation 'junit:junit:4.13-beta-3'\n" +
-                        "    implementation 'org.freemarker:freemarker:2.3.28'\n" +
-                        "    implementation 'org.codehaus.plexus:plexus-utils:3.2.1'\n" +
-                        "    testImplementation 'com.openpojo:openpojo:0.8.12'\n" +
-                        "    testImplementation 'junit:junit:4+'\n" +
-                        "    testImplementation 'org.mockito:mockito-core:3.0.0'\n" +
-                        "    testImplementation 'org.mockito:mockito-all:2.0.2-beta'\n" +
-                        "    testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.0'\n" +
-                        "    testImplementation 'org.apache.maven.plugin-testing:maven-plugin-testing-harness:3.3.0'\n" +
-                        "    testImplementation 'org.codehaus.plexus:plexus-component-annotations:2.0.0'\n" +
-                        "\n" +
-                        "\n" +
-                        "}\n" +
                         runCluecumberReport + " {\n" +
                         "    sourceJsonReportDirectory = '" + testProjectDir.getRoot().toString() + "/serendroid/'\n" +
                         "        generatedHtmlReportDirectory = '" + testProjectDir.getRoot().toString() + "/serendroid/'\n" +
