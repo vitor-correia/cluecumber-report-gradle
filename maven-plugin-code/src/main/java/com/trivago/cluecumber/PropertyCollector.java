@@ -5,7 +5,6 @@ import com.trivago.cluecumberCore.properties.PropertyManager;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-//import com.trivago.cluecumber
 
 import javax.inject.Inject;
 import java.util.LinkedHashMap;

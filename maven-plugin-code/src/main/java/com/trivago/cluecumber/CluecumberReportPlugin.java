@@ -34,8 +34,8 @@ import javax.inject.Inject;
 import java.nio.file.Path;
 import java.util.List;
 
-import static com.trivago.cluecumberCore.logging.CluecumberLogger.CluecumberLogLevel.COMPACT;
-import static com.trivago.cluecumberCore.logging.CluecumberLogger.CluecumberLogLevel.DEFAULT;
+import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.COMPACT;
+import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.DEFAULT;
 
 /**
  * The main plugin class.

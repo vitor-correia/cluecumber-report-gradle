@@ -36,8 +36,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../maven-plugin-code</module>
         <module>../plugin-core</module>
+        <module>../maven-plugin-code</module>
     </modules>
 
 
@@ -255,11 +255,6 @@
             <artifactId>plexus-component-annotations</artifactId>
             <version>${plexus.component.annotations.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.trivago.rta</groupId>
-            <artifactId>cluecumber-plugin-core</artifactId>
-            <version>2.3.1</version>
         </dependency>
     </dependencies>
 </project>

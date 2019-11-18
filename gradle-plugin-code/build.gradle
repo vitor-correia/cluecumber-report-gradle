@@ -28,7 +28,6 @@ project.ext.url         = 'git@github.com:trivago/cluecumber-report-plugin.git'
 
 dependencies {
     implementation 'com.trivago.rta:cluecumber-plugin-core:2.3.2'
-//    implementation 'com.trivago.rta:cluecumber-builder:2.3.2'
 
     implementation 'org.apache.maven.plugin-tools:maven-plugin-annotations:3.6.0'
     implementation 'org.apache.maven:maven-plugin-api:3.6.1'
