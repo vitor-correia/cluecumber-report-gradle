@@ -5,7 +5,6 @@ import com.trivago.cluecumberCore.exceptions.filesystem.MissingFileException;
 import com.trivago.cluecumberCore.exceptions.properties.WrongOrMissingPropertyException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.logging.BaseLogger;
-import com.trivago.cluecumberCore.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertiesFileLoader;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import org.junit.Before;

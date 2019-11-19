@@ -29,7 +29,7 @@ public class GradleCluecumberLogger extends BaseLogger{
     private CluecumberLogLevel currentLogLevel;
 
     /**
-     * Set the mojo logger so it can be used in any class that injects a CluecumberLogger.
+     * Set the gradle logger so it can be used in any class that with GradleCluecumberLogger.
      *
      * @param logger      The current {@link Logger}.
      * @param currentLogLevel the log level that the logger should react to.

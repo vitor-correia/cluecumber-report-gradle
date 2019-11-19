@@ -23,7 +23,7 @@ import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.pojo.Report;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
-import com.trivago.cluecumberCore.logging.CluecumberLogger;
+import com.trivago.cluecumber.logging.MavenCluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
@@ -43,7 +43,7 @@ import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.D
 @Mojo(name = "reporting")
 public final class CluecumberReportPlugin extends PropertyCollector {
 
-    private final CluecumberLogger logger;
+    private final MavenCluecumberLogger logger;
     private final PropertyManager propertyManager;
     private final FileSystemManager fileSystemManager;
     private final FileIO fileIO;
@@ -59,7 +59,7 @@ public final class CluecumberReportPlugin extends PropertyCollector {
 
     @Inject
     public CluecumberReportPlugin(
-            final CluecumberLogger logger,
+            final MavenCluecumberLogger logger,
             final PropertyManager propertyManager,
             final FileSystemManager fileSystemManager,
             final FileIO fileIO,
@@ -120,7 +120,7 @@ public final class CluecumberReportPlugin extends PropertyCollector {
                         PluginSettings.SCENARIO_SUMMARY_PAGE_PATH + PluginSettings.HTML_FILE_EXTENSION,
                 DEFAULT,
                 COMPACT,
-                CluecumberLogger.CluecumberLogLevel.MINIMAL
+                MavenCluecumberLogger.CluecumberLogLevel.MINIMAL
         );
     }
 }

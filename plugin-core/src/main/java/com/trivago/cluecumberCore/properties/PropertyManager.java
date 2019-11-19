@@ -21,7 +21,6 @@ import com.trivago.cluecumberCore.exceptions.filesystem.MissingFileException;
 import com.trivago.cluecumberCore.exceptions.properties.WrongOrMissingPropertyException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.logging.BaseLogger;
-import com.trivago.cluecumberCore.logging.CluecumberLogger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

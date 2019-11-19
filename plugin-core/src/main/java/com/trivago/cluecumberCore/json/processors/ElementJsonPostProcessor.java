@@ -25,7 +25,6 @@ import com.trivago.cluecumberCore.json.pojo.Embedding;
 import com.trivago.cluecumberCore.json.pojo.ResultMatch;
 import com.trivago.cluecumberCore.json.pojo.Step;
 import com.trivago.cluecumberCore.logging.BaseLogger;
-import com.trivago.cluecumberCore.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import io.gsonfire.PostProcessor;
 import org.codehaus.plexus.util.Base64;
