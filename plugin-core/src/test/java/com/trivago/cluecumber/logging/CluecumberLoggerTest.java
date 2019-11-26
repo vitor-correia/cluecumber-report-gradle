@@ -1,7 +1,7 @@
 package com.trivago.cluecumber.logging;
 
-import com.trivago.cluecumber.logging.MavenCluecumberLogger;
-import org.apache.maven.plugin.logging.Log;
+import com.trivago.cluecumberCore.logging.BaseLogger;
+import com.trivago.cluecumberCore.logging.IBaseLogger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,13 +9,13 @@ import static org.mockito.Mockito.*;
 
 public class CluecumberLoggerTest {
 
-    private Log mockedLogger;
-    private MavenCluecumberLogger logger;
+    private IBaseLogger mockedLogger;
+    private BaseLogger logger;
 
     @Before
     public void setup() {
-        mockedLogger = mock(Log.class);
-        logger = new MavenCluecumberLogger();
+        mockedLogger = mock(IBaseLogger.class);
+        logger = new BaseLogger();
         logger.initialize(mockedLogger, null);
     }
 
