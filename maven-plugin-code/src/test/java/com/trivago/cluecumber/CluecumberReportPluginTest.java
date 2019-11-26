@@ -1,12 +1,14 @@
 package com.trivago.cluecumber;
 
-import com.trivago.cluecumber.CluecumberReportPlugin;
+import com.trivago.cluecumberCore.CluecumberReportPluginCore;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
 import com.trivago.cluecumber.logging.MavenCluecumberLogger;
+import com.trivago.cluecumberCore.logging.BaseLogger;
+import com.trivago.cluecumberCore.logging.IBaseLogger;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
 import org.junit.Before;
@@ -26,10 +28,11 @@ public class CluecumberReportPluginTest {
     private CluecumberReportPlugin cluecumberReportPlugin;
     private JsonPojoConverter jsonPojoConverter;
     private FileIO fileIO;
+    private CluecumberReportPluginCore cluecumberReportPluginCore;
 
     @Before
     public void setup() throws CluecumberPluginException {
-        MavenCluecumberLogger cluecumberLogger = mock(MavenCluecumberLogger.class);
+        BaseLogger cluecumberLogger = mock(BaseLogger.class);
         PropertyManager propertyManager = mock(PropertyManager.class);
 
         FileSystemManager fileSystemManager = mock(FileSystemManager.class);
@@ -50,8 +53,7 @@ public class CluecumberReportPluginTest {
                 fileIO,
                 jsonPojoConverter,
                 elementIndexPostProcessor,
-                reportGenerator
-        );
+                reportGenerator);
     }
 
     @Test
