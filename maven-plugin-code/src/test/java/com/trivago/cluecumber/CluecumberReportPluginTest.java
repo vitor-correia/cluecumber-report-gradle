@@ -6,9 +6,7 @@ import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
-import com.trivago.cluecumber.logging.MavenCluecumberLogger;
-import com.trivago.cluecumberCore.logging.BaseLogger;
-import com.trivago.cluecumberCore.logging.IBaseLogger;
+import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
 import org.junit.Before;
@@ -32,7 +30,7 @@ public class CluecumberReportPluginTest {
 
     @Before
     public void setup() throws CluecumberPluginException {
-        BaseLogger cluecumberLogger = mock(BaseLogger.class);
+        LoggerUtils cluecumberLogger = mock(LoggerUtils.class);
         PropertyManager propertyManager = mock(PropertyManager.class);
 
         FileSystemManager fileSystemManager = mock(FileSystemManager.class);
@@ -47,7 +45,6 @@ public class CluecumberReportPluginTest {
         ReportGenerator reportGenerator = mock(ReportGenerator.class);
 
         cluecumberReportPlugin = new CluecumberReportPlugin(
-                cluecumberLogger,
                 propertyManager,
                 fileSystemManager,
                 fileIO,

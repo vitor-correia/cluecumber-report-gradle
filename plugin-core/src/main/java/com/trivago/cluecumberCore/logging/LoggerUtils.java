@@ -4,32 +4,34 @@ import javax.inject.Singleton;
 import java.util.Arrays;
 
 @Singleton
-public class BaseLogger {
+public class LoggerUtils {
 
-    private IBaseLogger logger;
-    private CluecumberLogLevel currentLogLevel;
+    private static ICluecumberLogger sLogger;
+    private static CluecumberLogLevel sCurrentLogLevel;
+
+
     /**
      //     * Set the mojo logger so it can be used in any class that injects a CluecumberLogger.
      //     *
      //     * @param logger
      //     * @param currentLogLevel the log level that the logger should react to.
      //     */
-    public void initialize(final IBaseLogger logger, final String currentLogLevel) {
-        this.logger = logger;
+    public static void initialize(ICluecumberLogger logger, final String currentLogLevel) {
+        sLogger = logger;
         if (currentLogLevel == null) {
-            this.currentLogLevel = CluecumberLogLevel.DEFAULT;
+            sCurrentLogLevel = CluecumberLogLevel.DEFAULT;
             return;
         }
 
         try {
-            this.currentLogLevel = CluecumberLogLevel.valueOf(currentLogLevel.toUpperCase());
+            sCurrentLogLevel = CluecumberLogLevel.valueOf(currentLogLevel.toUpperCase());
         } catch (IllegalArgumentException e) {
-            this.currentLogLevel = CluecumberLogLevel.DEFAULT;
-            warn("Log level " + currentLogLevel + " is unknown. Cluecumber will use 'default' logging.");
+            sCurrentLogLevel = CluecumberLogLevel.DEFAULT;
+            logger.warn("Log level " + currentLogLevel + " is unknown. Cluecumber will use 'default' logging.");
         }
     }
 
-    public void logInfoSeparator(final CluecumberLogLevel... cluecumberLogLevels) {
+    public static void logInfoSeparator(final CluecumberLogLevel... cluecumberLogLevels) {
         info("------------------------------------------------------------------------", cluecumberLogLevels);
     }
 
@@ -39,7 +41,7 @@ public class BaseLogger {
      * @param logString           The {@link String} to be logged.
      * @param cluecumberLogLevels The log levels ({@link CluecumberLogLevel} list) in which the message should be displayed.
      */
-    public void info(final String logString, CluecumberLogLevel... cluecumberLogLevels) {
+    public static void info(final String logString, CluecumberLogLevel... cluecumberLogLevels) {
         log(LogLevel.INFO, logString, cluecumberLogLevels);
     }
 
@@ -48,7 +50,7 @@ public class BaseLogger {
      *
      * @param logString The {@link String} to be logged.
      */
-    public void warn(final String logString) {
+    public static void warn(final String logString) {
         CluecumberLogLevel[] logLevels =
                 new CluecumberLogLevel[]{CluecumberLogLevel.DEFAULT, CluecumberLogLevel.COMPACT, CluecumberLogLevel.MINIMAL};
         log(LogLevel.WARN, logString, logLevels);
@@ -60,24 +62,24 @@ public class BaseLogger {
      //     * @param logString           The {@link String} to be logged.
      //     * @param CluecumberLogLevels The log levels in which the message should be displayed.
      //     */
-    protected void log(final LogLevel logLevel, final String logString, CluecumberLogLevel... CluecumberLogLevels) {
-        if (currentLogLevel == CluecumberLogLevel.OFF) {
+    protected static void log(final LogLevel logLevel, final String logString, CluecumberLogLevel... CluecumberLogLevels) {
+        if (sCurrentLogLevel == CluecumberLogLevel.OFF) {
             return;
         }
 
-        if (currentLogLevel != null
+        if (sCurrentLogLevel != null
                 && CluecumberLogLevels != null
                 && CluecumberLogLevels.length > 0
                 && Arrays.stream(CluecumberLogLevels)
-                .noneMatch(CluecumberLogLevel -> CluecumberLogLevel == currentLogLevel)) {
+                .noneMatch(CluecumberLogLevel -> CluecumberLogLevel == sCurrentLogLevel)) {
             return;
         }
         switch (logLevel) {
             case INFO:
-                logger.info(logString);
+                sLogger.info(logString);
                 break;
             case WARN:
-                logger.warn(logString);
+                sLogger.warn(logString);
                 break;
         }
     }

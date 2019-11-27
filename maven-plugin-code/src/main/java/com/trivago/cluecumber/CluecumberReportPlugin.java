@@ -16,18 +16,19 @@
 
 package com.trivago.cluecumber;
 
+import com.trivago.cluecumber.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.CluecumberReportPluginCore;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
-import com.trivago.cluecumber.logging.MavenCluecumberLogger;
-import com.trivago.cluecumberCore.logging.BaseLogger;
-import com.trivago.cluecumberCore.logging.IBaseLogger;
+import com.trivago.cluecumberCore.logging.ICluecumberLogger;
+import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
@@ -40,7 +41,6 @@ import java.util.LinkedHashMap;
 @Mojo(name = "reporting")
 public final class CluecumberReportPlugin extends AbstractMojo {
 
-    private final BaseLogger logger;
     private final PropertyManager propertyManager;
     private final FileSystemManager fileSystemManager;
     private final FileIO fileIO;
@@ -49,6 +49,8 @@ public final class CluecumberReportPlugin extends AbstractMojo {
     private final ReportGenerator reportGenerator;
     private final CluecumberReportPluginCore cluecumberReportPluginCore;
 
+    private final ICluecumberLogger ilogger = new CluecumberLogger(getLog());
+//    private final LoggerUtils logger;
     /**
      * The path to the Cucumber JSON files.
      */
@@ -146,14 +148,12 @@ public final class CluecumberReportPlugin extends AbstractMojo {
 
     @Inject
     public CluecumberReportPlugin(
-            final BaseLogger logger,
             final PropertyManager propertyManager,
             final FileSystemManager fileSystemManager,
             final FileIO fileIO,
             final JsonPojoConverter jsonPojoConverter,
             final ElementIndexPreProcessor elementIndexPreProcessor,
             final ReportGenerator reportGenerator) {
-        this.logger = logger;
         this.propertyManager = propertyManager;
         this.fileSystemManager = fileSystemManager;
         this.fileIO = fileIO;
@@ -177,7 +177,7 @@ public final class CluecumberReportPlugin extends AbstractMojo {
      */
     public void execute() throws CluecumberPluginException {
         cluecumberReportPluginCore.taskCore(
-                logger,
+                ilogger,
                 skip,
                 logLevel,
                 sourceJsonReportDirectory,

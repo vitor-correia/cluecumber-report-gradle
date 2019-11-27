@@ -21,27 +21,18 @@ import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.pojo.Report;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
-import com.trivago.cluecumberCore.json.processors.ElementJsonPostProcessor;
-import com.trivago.cluecumberCore.json.processors.ReportJsonPostProcessor;
-import com.trivago.cluecumberCore.logging.BaseLogger;
-import com.trivago.cluecumberCore.logging.IBaseLogger;
-import com.trivago.cluecumberCore.properties.PropertiesFileLoader;
+import com.trivago.cluecumberCore.logging.LoggerUtils;
+import com.trivago.cluecumberCore.logging.ICluecumberLogger;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
-import com.trivago.cluecumberCore.rendering.pages.charts.ChartJsonConverter;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
-import com.trivago.cluecumberCore.rendering.pages.renderering.*;
-import com.trivago.cluecumberCore.rendering.pages.templates.TemplateConfiguration;
-import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
-import com.trivago.cluecumberCore.constants.ChartConfiguration;
-import com.trivago.cluecumberCore.rendering.pages.visitors.*;
 
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.COMPACT;
-import static com.trivago.cluecumberCore.logging.BaseLogger.CluecumberLogLevel.DEFAULT;
+import static com.trivago.cluecumberCore.logging.LoggerUtils.CluecumberLogLevel.COMPACT;
+import static com.trivago.cluecumberCore.logging.LoggerUtils.CluecumberLogLevel.DEFAULT;
 
 /**
  * The main plugin class.
@@ -54,7 +45,6 @@ public class CluecumberReportPluginCore {
     private final JsonPojoConverter jsonPojoConverter;
     private final ElementIndexPreProcessor elementIndexPreProcessor;
     private final ReportGenerator reportGenerator;
-    private IBaseLogger ilogger;
 
 
     public CluecumberReportPluginCore(
@@ -73,16 +63,12 @@ public class CluecumberReportPluginCore {
         this.reportGenerator = reportGenerator;
     }
 
-    public void setProperties() throws CluecumberPluginException {
-
-    }
-
     /**
      * Cluecumber Report start method.
      *
      * @throws CluecumberPluginException When thrown, the plugin execution is stopped.
      */
-    public void taskCore(BaseLogger logger,
+    public void taskCore(ICluecumberLogger ilogger,
                          Boolean skip,
                          String logLevel,
                          String sourceJsonReportDirectory,
@@ -99,17 +85,18 @@ public class CluecumberReportPluginCore {
                          String customStatusColorSkipped,
                          String customPageTitle) throws CluecumberPluginException {
 
-        logger.initialize(ilogger, logLevel);
+        LoggerUtils.initialize(ilogger, logLevel);
+
         if (skip) {
-            logger.info("Cluecumber report generation was skipped using the <skip> property.",
+            LoggerUtils.info("Cluecumber report generation was skipped using the <skip> property.",
                     DEFAULT);
             return;
         }
 
-        logger.logInfoSeparator(DEFAULT);
-        logger.info(String.format(" Cluecumber Report Plugin, version %s", getClass().getPackage()
+        LoggerUtils.logInfoSeparator(DEFAULT);
+        LoggerUtils.info(String.format(" Cluecumber Report Plugin, version %s", getClass().getPackage()
                 .getImplementationVersion()), DEFAULT);
-        logger.logInfoSeparator(DEFAULT, COMPACT);
+        LoggerUtils.logInfoSeparator(DEFAULT, COMPACT);
 
         try {
             // Initialize and validate passed properties on gradle.build
@@ -142,17 +129,17 @@ public class CluecumberReportPluginCore {
                 Report[] reports = jsonPojoConverter.convertJsonToReportPojos(jsonString);
                 allScenariosPageCollection.addReports(reports);
             } catch (CluecumberPluginException e) {
-                logger.warn("Could not parse JSON in file '" + jsonFilePath.toString() + "': " + e.getMessage());
+                LoggerUtils.warn("Could not parse JSON in file '" + jsonFilePath.toString() + "': " + e.getMessage());
             }
         }
         elementIndexPreProcessor.addScenarioIndices(allScenariosPageCollection.getReports());
         reportGenerator.generateReport(allScenariosPageCollection);
-        logger.info(
+        LoggerUtils.info(
                 "=> Cluecumber Report: " + propertyManager.getGeneratedHtmlReportDirectory() + "/" +
                         PluginSettings.SCENARIO_SUMMARY_PAGE_PATH + PluginSettings.HTML_FILE_EXTENSION,
                 DEFAULT,
                 COMPACT,
-                BaseLogger.CluecumberLogLevel.MINIMAL
+                LoggerUtils.CluecumberLogLevel.MINIMAL
         );
     }
 }

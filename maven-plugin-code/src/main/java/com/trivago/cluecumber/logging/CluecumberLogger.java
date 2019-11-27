@@ -16,17 +16,15 @@
 
 package com.trivago.cluecumber.logging;
 
-import com.trivago.cluecumberCore.logging.IBaseLogger;
+import com.trivago.cluecumberCore.logging.ICluecumberLogger;
 import org.apache.maven.plugin.logging.Log;
 
-import javax.inject.Singleton;
 
-@Singleton
-public class MavenCluecumberLogger implements IBaseLogger {
+public class CluecumberLogger implements ICluecumberLogger {
 
     private Log logger;
 
-    public MavenCluecumberLogger(Log logger) {
+    public CluecumberLogger(Log logger) {
         this.logger = logger;
     }
 

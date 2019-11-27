@@ -4,7 +4,7 @@ import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.pojo.Element;
 import com.trivago.cluecumberCore.json.pojo.Report;
-import com.trivago.cluecumberCore.logging.BaseLogger;
+import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.properties.PropertiesFileLoader;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
@@ -29,7 +29,7 @@ public class ReportGeneratorTest {
     @Before
     public void setup() {
         fileSystemManager = mock(FileSystemManager.class);
-        BaseLogger logger = mock(BaseLogger.class);
+        LoggerUtils logger = mock(LoggerUtils.class);
         FileIO fileIO = mock(FileIO.class);
         TemplateEngine templateEngine = mock(TemplateEngine.class);
         PropertiesFileLoader propertiesFileLoader = mock(PropertiesFileLoader.class);

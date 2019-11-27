@@ -27,7 +27,7 @@ project.ext.scm         = 'https://github.com:trivago/cluecumber-report-plugin.g
 project.ext.url         = 'git@github.com:trivago/cluecumber-report-plugin.git'
 
 dependencies {
-    implementation 'com.trivago.rta:cluecumber-plugin-core:2.3.2'
+    implementation 'com.trivago.rta:cluecumber-plugin-core:2.3.3'
 
     testImplementation 'junit:junit:4+'
     testImplementation 'org.mockito:mockito-core:3.0.0'
