@@ -57,16 +57,6 @@ public class PropertyManagerTest {
         propertyManager.setGeneratedHtmlReportDirectory("");
     }
 
-//    @Test
-    public void logBasePropertiesTest() {
-        propertyManager.logProperties();
-        verify(logger, times(2)).info(anyString(),
-                eq(LoggerUtils.CluecumberLogLevel.DEFAULT),
-                eq(LoggerUtils.CluecumberLogLevel.COMPACT));
-        verify(logger, times(6)).info(anyString(),
-                eq(LoggerUtils.CluecumberLogLevel.DEFAULT));
-    }
-
     @Test
     public void customParametersTest() {
         Map<String, String> customParameters = new HashMap<>();
@@ -185,21 +175,4 @@ public class PropertyManagerTest {
         assertThat(propertyManager.getCustomStatusColorSkipped(), is("#cccccc"));
     }
 
-//    @Test
-    public void logFullPropertiesTest() throws MissingFileException {
-        Map<String, String> customParameters = new HashMap<>();
-        customParameters.put("key1", "value1");
-        customParameters.put("key2", "value2");
-        propertyManager.setCustomParameters(customParameters);
-
-        when(fileIO.isExistingFile("test")).thenReturn(true);
-        propertyManager.setCustomCssFile("test");
-
-        propertyManager.logProperties();
-        verify(logger, times(2)).info(anyString(),
-                eq(LoggerUtils.CluecumberLogLevel.DEFAULT),
-                eq(LoggerUtils.CluecumberLogLevel.COMPACT));
-        verify(logger, times(9)).info(anyString(),
-                eq(LoggerUtils.CluecumberLogLevel.DEFAULT));
-    }
 }
