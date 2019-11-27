@@ -25,7 +25,8 @@ import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
 import com.trivago.cluecumberCore.rendering.pages.renderering.CustomCssRenderer;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
-import com.trivago.cluecumberCore.rendering.pages.visitors.*;
+import com.trivago.cluecumberCore.rendering.pages.visitors.PageVisitor;
+import com.trivago.cluecumberCore.rendering.pages.visitors.VisitorDirectory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

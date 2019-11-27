@@ -1,7 +1,7 @@
 package com.trivago.cluecumber.logging;
 
-import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.logging.ICluecumberLogger;
+import com.trivago.cluecumberCore.logging.LoggerUtils;
 import org.junit.Before;
 import org.junit.Test;
 

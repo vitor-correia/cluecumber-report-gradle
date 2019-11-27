@@ -13,9 +13,10 @@ package com.trivago.cluecumber;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.trivago.cluecumber.logging.CluecumberLogger;
 
+import com.trivago.cluecumber.logging.CluecumberLogger;
 import com.trivago.cluecumberCore.CluecumberReportPluginCore;
+import com.trivago.cluecumberCore.constants.ChartConfiguration;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.filesystem.FileSystemManager;
@@ -23,8 +24,8 @@ import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
 import com.trivago.cluecumberCore.json.processors.ElementJsonPostProcessor;
 import com.trivago.cluecumberCore.json.processors.ReportJsonPostProcessor;
-import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.logging.ICluecumberLogger;
+import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.properties.PropertiesFileLoader;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
@@ -32,7 +33,6 @@ import com.trivago.cluecumberCore.rendering.pages.charts.ChartJsonConverter;
 import com.trivago.cluecumberCore.rendering.pages.renderering.*;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateConfiguration;
 import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
-import com.trivago.cluecumberCore.constants.ChartConfiguration;
 import com.trivago.cluecumberCore.rendering.pages.visitors.*;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logging;

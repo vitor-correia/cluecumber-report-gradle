@@ -18,14 +18,7 @@ package com.trivago.cluecumberCore.rendering.pages.charts;
 
 import com.trivago.cluecumberCore.constants.ChartConfiguration;
 import com.trivago.cluecumberCore.constants.Status;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Axis;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Chart;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Data;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Dataset;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Options;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.ScaleLabel;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Scales;
-import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Ticks;
+import com.trivago.cluecumberCore.rendering.pages.charts.pojos.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

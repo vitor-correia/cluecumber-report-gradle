@@ -24,11 +24,9 @@ import com.trivago.cluecumberCore.filesystem.FileSystemManager;
 import com.trivago.cluecumberCore.json.JsonPojoConverter;
 import com.trivago.cluecumberCore.json.processors.ElementIndexPreProcessor;
 import com.trivago.cluecumberCore.logging.ICluecumberLogger;
-import com.trivago.cluecumberCore.logging.LoggerUtils;
 import com.trivago.cluecumberCore.properties.PropertyManager;
 import com.trivago.cluecumberCore.rendering.ReportGenerator;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 

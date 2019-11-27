@@ -6,18 +6,16 @@ import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.json.pojo.Element;
 import com.trivago.cluecumberCore.json.pojo.Report;
 import com.trivago.cluecumberCore.properties.PropertyManager;
-import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.ScenarioDetailsPageCollection;
 import com.trivago.cluecumberCore.rendering.pages.renderering.AllScenariosPageRenderer;
 import com.trivago.cluecumberCore.rendering.pages.renderering.ScenarioDetailsPageRenderer;
+import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine.Template.ALL_SCENARIOS;
-import static com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine.Template.SCENARIO_DETAILS;
-import static com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine.Template.SCENARIO_SEQUENCE;
+import static com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine.Template.*;
 
 @Singleton
 public class ScenarioVisitor implements PageVisitor {

@@ -4,12 +4,12 @@ import com.trivago.cluecumberCore.constants.PluginSettings;
 import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
 import com.trivago.cluecumberCore.filesystem.FileIO;
 import com.trivago.cluecumberCore.properties.PropertyManager;
-import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
 import com.trivago.cluecumberCore.rendering.pages.pojos.Feature;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllFeaturesPageCollection;
 import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
 import com.trivago.cluecumberCore.rendering.pages.renderering.AllFeaturesPageRenderer;
 import com.trivago.cluecumberCore.rendering.pages.renderering.AllScenariosPageRenderer;
+import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
