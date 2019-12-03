@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.trivago.rta</groupId>
+        <artifactId>cluecumber-builder</artifactId>
+        <version>2.3.2</version>
+        <relativePath>../cluecumber-builder/pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.trivago.rta</groupId>
+    <artifactId>cluecumber-report-maven-plugin</artifactId>
+    <version>2.3.2</version>
+    <url>https://github.com/trivago/cluecumber-report-plugin</url>
+
+
+    <name>Cluecumber Maven Plugin for Cucumber Reports</name>
+    <description>Plugin for generating clear Cucumber BDD test result reports.</description>
+
+    <inceptionYear>2017</inceptionYear>
+
+    <organization>
+        <name>trivago N.V.</name>
+        <url>http://www.trivago.de</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Benjamin Bischoff</name>
+            <organization>trivago N.V.</organization>
+            <organizationUrl>http://www.trivago.de</organizationUrl>
+            <roles>
+                <role>Test Automation Engineer</role>
+                <role>Knowledge Lead Test Automation</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <packaging>maven-plugin</packaging>
+
+    <scm>
+        <connection>scm:git:git@github.com:trivago/cluecumber-report-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:trivago/cluecumber-report-plugin.git</developerConnection>
+        <url>git@github.com:trivago/cluecumber-report-plugin.git</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${nexus.staging.maven.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>com.trivago.rta</groupId>
+            <artifactId>cluecumber-plugin-core</artifactId>
+            <version>2.3.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

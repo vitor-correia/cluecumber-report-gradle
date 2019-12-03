@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.10.1'
+}
+
+group 'com.trivago.cluecumber'
+version '1.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenLocal()
+    maven {
+        url = 'http://repo.maven.apache.org/maven2'
+        url = "https://jitpack.io"
+    }
+}
+
+project.description     = 'Cluecumber Gradle Plugin for Cucumber Reports'
+project.group           = 'com.trivago.rta'
+project.version         = '2.3.2'
+
+project.ext.name        = 'cluecumber-report-gradle-plugin'
+project.ext.scm         = 'https://github.com:trivago/cluecumber-report-plugin.git'
+project.ext.url         = 'git@github.com:trivago/cluecumber-report-plugin.git'
+
+dependencies {
+    implementation 'com.trivago.rta:cluecumber-plugin-core:2.3.2'
+
+    testImplementation 'junit:junit:4+'
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+wrapper {
+    gradleVersion = "5.6.1"
+    distributionType = Wrapper.DistributionType.ALL
+}
