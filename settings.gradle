@@ -1,0 +1,3 @@
+rootProject.name = 'cluecumber-report-plugin'
+include 'plugin-core'
+include 'gradle-plugin-code'
