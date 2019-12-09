@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PluginSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.constants</a> &gt; <span class="el_source">PluginSettings.java</span></div><h1>PluginSettings.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.constants;
+
+/**
+ * Holder class for static plugin settings
+ */
+public class PluginSettings {
+
+    public final static String NAME = &quot;Cluecumber Report Plugin&quot;;
+
+    public static final String TEMPLATE_FILE_EXTENSION = &quot;.ftl&quot;;
+    public static final String HTML_FILE_EXTENSION = &quot;.html&quot;;
+    public static final String BASE_TEMPLATE_PATH = &quot;/template&quot;;
+    public static final String PAGES_DIRECTORY = &quot;pages&quot;;
+
+    public final static String SCENARIO_SUMMARY_PAGE_NAME = &quot;Scenario Summary&quot;;
+    public final static String SCENARIO_SUMMARY_PAGE_PATH = &quot;index&quot;;
+
+    public final static String SCENARIO_DETAIL_PAGE_NAME = &quot;Scenario Details&quot;;
+    public final static String SCENARIO_DETAIL_PAGE_PATH = &quot;scenario-detail&quot;;
+    public static final String SCENARIO_DETAIL_PAGE_FRAGMENT = &quot;/&quot; + SCENARIO_DETAIL_PAGE_PATH + &quot;/scenario_&quot;;
+
+    public final static String SCENARIO_SEQUENCE_PAGE_PATH = &quot;scenario-sequence&quot;;
+
+    public final static String TAG_SUMMARY_PAGE_NAME = &quot;Tag Summary&quot;;
+    public final static String TAG_SUMMARY_PAGE_PATH = &quot;tag-summary&quot;;
+    public static final String TAG_SCENARIO_PAGE_PATH = &quot;tag-scenarios&quot;;
+    public static final String TAG_SCENARIO_PAGE_FRAGMENT = &quot;/&quot; + TAG_SCENARIO_PAGE_PATH + &quot;/tag_&quot;;
+
+    public final static String STEP_SUMMARY_PAGE_NAME = &quot;Step Summary&quot;;
+    public final static String STEP_SUMMARY_PAGE_PATH = &quot;step-summary&quot;;
+    public static final String STEP_SCENARIO_PAGE_PATH = &quot;step-scenarios&quot;;
+    public static final String STEP_SCENARIO_PAGE_FRAGMENT = &quot;/&quot; + STEP_SCENARIO_PAGE_PATH + &quot;/step_&quot;;
+
+    public final static String FEATURE_SUMMARY_PAGE_NAME = &quot;Feature Summary&quot;;
+    public final static String FEATURE_SUMMARY_PAGE_PATH = &quot;feature-summary&quot;;
+    public static final String FEATURE_SCENARIOS_PAGE_PATH = &quot;feature-scenarios&quot;;
+    public static final String FEATURE_SCENARIOS_PAGE_FRAGMENT = &quot;/&quot; + FEATURE_SCENARIOS_PAGE_PATH + &quot;/feature_&quot;;
+    
+<span class="fc" id="L55">    public PluginSettings() {</span>
+<span class="fc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

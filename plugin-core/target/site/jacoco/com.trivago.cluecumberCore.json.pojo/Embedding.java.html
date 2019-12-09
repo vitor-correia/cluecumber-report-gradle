@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Embedding.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.json.pojo</a> &gt; <span class="el_source">Embedding.java</span></div><h1>Embedding.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.json.pojo;
+
+import com.google.gson.annotations.SerializedName;
+import com.trivago.cluecumberCore.constants.MimeType;
+import org.codehaus.plexus.util.Base64;
+
+import java.nio.charset.StandardCharsets;
+
+<span class="fc" id="L25">public class Embedding {</span>
+
+    private String data;
+    private String decodedData;
+<span class="fc" id="L29">    @SerializedName(&quot;mime_type&quot;)</span>
+    private MimeType mimeType = MimeType.UNKNOWN;
+<span class="fc" id="L31">    private String name = &quot;&quot;;</span>
+
+    private transient String filename;
+
+    public String getData() {
+<span class="fc" id="L36">        return data;</span>
+    }
+
+    public void setData(final String data) {
+<span class="fc" id="L40">        this.data = data;</span>
+<span class="fc" id="L41">    }</span>
+
+    public String getDecodedData() {
+<span class="fc" id="L44">        return decodedData;</span>
+    }
+
+    public void encodeData(final String data) {
+<span class="fc" id="L48">        decodedData = new String(Base64.decodeBase64(data.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);</span>
+<span class="pc bpc" id="L49" title="1 of 4 branches missed.">        if (mimeType == MimeType.XML || mimeType == MimeType.APPLICATION_XML) {</span>
+<span class="fc" id="L50">            decodedData = decodedData.replaceAll(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).replaceAll(&quot;&gt;&quot;, &quot;&amp;gt;&quot;);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        } else if (mimeType == MimeType.HTML) {</span>
+<span class="fc" id="L52">            decodedData = decodedData.replaceAll(&quot;\&quot;&quot;, &quot;'&quot;);</span>
+        }
+<span class="fc" id="L54">    }</span>
+
+    public MimeType getMimeType() {
+<span class="fc" id="L57">        return mimeType;</span>
+    }
+
+    public void setMimeType(final MimeType mimeType) {
+<span class="fc" id="L61">        this.mimeType = mimeType;</span>
+<span class="fc" id="L62">    }</span>
+
+    public String getName() {
+<span class="fc" id="L65">        return name;</span>
+    }
+
+    public void setName(final String name) {
+<span class="fc" id="L69">        this.name = name;</span>
+<span class="fc" id="L70">    }</span>
+
+    public String getFilename() {
+<span class="fc" id="L73">        return filename;</span>
+    }
+
+    public void setFilename(final String filename) {
+<span class="fc" id="L77">        this.filename = filename;</span>
+<span class="fc" id="L78">    }</span>
+
+    public boolean isImage() {
+<span class="pc bpc" id="L81" title="2 of 14 branches missed.">        return mimeType == MimeType.PNG ||</span>
+                mimeType == MimeType.GIF ||
+                mimeType == MimeType.BMP ||
+                mimeType == MimeType.JPEG ||
+                mimeType == MimeType.JPG ||
+                mimeType == MimeType.SVG ||
+                mimeType == MimeType.SVG_XML;
+    }
+
+    public boolean isPlainText() {
+<span class="fc" id="L91">        return mimeType.getContentType().equalsIgnoreCase(&quot;text/plain&quot;);</span>
+    }
+
+    public String getFileEnding() {
+<span class="fc bfc" id="L95" title="All 5 branches covered.">        switch (mimeType) {</span>
+            case PNG:
+            case GIF:
+            case BMP:
+            case JPG:
+            case JPEG:
+            case HTML:
+            case XML:
+            case JSON:
+            case APPLICATION_XML:
+<span class="fc" id="L105">                return mimeType.getContentType().substring(mimeType.getContentType().indexOf('/') + 1);</span>
+            case SVG:
+            case SVG_XML:
+<span class="fc" id="L108">                return &quot;svg&quot;;</span>
+            case TXT:
+<span class="fc" id="L110">                return &quot;txt&quot;;</span>
+            case PDF:
+<span class="fc" id="L112">                return &quot;pdf&quot;;</span>
+            default:
+<span class="fc" id="L114">                return &quot;unknown&quot;;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

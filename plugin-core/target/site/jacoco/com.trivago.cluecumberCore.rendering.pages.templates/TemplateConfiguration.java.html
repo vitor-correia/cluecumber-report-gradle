@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TemplateConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.rendering.pages.templates</a> &gt; <span class="el_source">TemplateConfiguration.java</span></div><h1>TemplateConfiguration.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.rendering.pages.templates;
+
+import com.trivago.cluecumberCore.constants.PluginSettings;
+import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
+
+import javax.inject.Singleton;
+
+@Singleton
+<span class="fc" id="L28">public class TemplateConfiguration {</span>
+    private Configuration cfg;
+
+    public void init(final String basePath) {
+<span class="fc" id="L32">        cfg = new Configuration(Configuration.VERSION_2_3_29);</span>
+<span class="fc" id="L33">        cfg.setClassForTemplateLoading(this.getClass(), basePath);</span>
+<span class="fc" id="L34">        cfg.setDefaultEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L35">        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);</span>
+<span class="fc" id="L36">        cfg.setWhitespaceStripping(true);</span>
+<span class="fc" id="L37">        cfg.setLogTemplateExceptions(false);</span>
+<span class="fc" id="L38">    }</span>
+
+    public Template getTemplate(final String templateName) throws CluecumberPluginException {
+        Template template;
+        try {
+<span class="fc" id="L43">            template = cfg.getTemplate(templateName + PluginSettings.TEMPLATE_FILE_EXTENSION);</span>
+<span class="fc" id="L44">        } catch (Exception e) {</span>
+<span class="fc" id="L45">            throw new CluecumberPluginException(&quot;Template '&quot; + templateName + &quot;' was not found or not parsable: &quot; +</span>
+<span class="fc" id="L46">                    e.getMessage());</span>
+<span class="fc" id="L47">        }</span>
+<span class="fc" id="L48">        return template;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AllScenariosPageCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections</a> &gt; <span class="el_source">AllScenariosPageCollection.java</span></div><h1>AllScenariosPageCollection.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections;
+
+import com.trivago.cluecumberCore.constants.Status;
+import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
+import com.trivago.cluecumberCore.json.pojo.Element;
+import com.trivago.cluecumberCore.json.pojo.Report;
+import com.trivago.cluecumberCore.json.pojo.Step;
+import com.trivago.cluecumberCore.json.pojo.Tag;
+import com.trivago.cluecumberCore.rendering.pages.pojos.CustomParameter;
+import com.trivago.cluecumberCore.rendering.pages.pojos.Feature;
+import com.trivago.cluecumberCore.rendering.pages.renderering.RenderingUtils;
+import com.trivago.cluecumberCore.rendering.pages.visitors.PageVisitor;
+import com.trivago.cluecumberCore.rendering.pages.visitors.Visitable;
+
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class AllScenariosPageCollection extends PageCollection implements Visitable {
+<span class="fc" id="L38">    private List&lt;Report&gt; reports = new ArrayList&lt;&gt;();</span>
+    private List&lt;CustomParameter&gt; customParameters;
+    private Tag tagFilter;
+    private Feature featureFilter;
+    private Step stepFilter;
+
+    public AllScenariosPageCollection(final String pageTitle) {
+<span class="fc" id="L45">        super(pageTitle);</span>
+<span class="fc" id="L46">    }</span>
+
+    public List&lt;Report&gt; getReports() {
+<span class="fc" id="L49">        return reports;</span>
+    }
+
+    public void clearReports() {
+<span class="fc" id="L53">        reports = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">    }</span>
+
+    public void addReports(final Report[] reportList) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (reportList == null) {</span>
+<span class="fc" id="L58">            return;</span>
+        }
+<span class="fc" id="L60">        addReports(Arrays.asList(reportList));</span>
+<span class="fc" id="L61">    }</span>
+
+    private void addReports(final List&lt;Report&gt; reportList) {
+<span class="fc" id="L64">        this.reports.addAll(reportList);</span>
+<span class="fc" id="L65">    }</span>
+
+    public int getTotalNumberOfScenarios() {
+<span class="fc" id="L68">        return reports.stream().map(Report::getElements).</span>
+<span class="fc" id="L69">                mapToInt(elements -&gt; (int) elements.stream().filter(Element::isScenario).count()).sum();</span>
+    }
+
+    public boolean hasFailedScenarios() {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        return getTotalNumberOfFailedScenarios() &gt; 0;</span>
+    }
+
+    public boolean hasPassedScenarios() {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return getTotalNumberOfPassedScenarios() &gt; 0;</span>
+    }
+
+    public boolean hasSkippedScenarios() {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        return getTotalNumberOfSkippedScenarios() &gt; 0;</span>
+    }
+
+    public int getTotalNumberOfPassedScenarios() {
+<span class="fc" id="L85">        return getNumberOfScenariosWithStatus(Status.PASSED);</span>
+    }
+
+    public int getTotalNumberOfFailedScenarios() {
+<span class="fc" id="L89">        return getNumberOfScenariosWithStatus(Status.FAILED);</span>
+    }
+
+    public int getTotalNumberOfSkippedScenarios() {
+<span class="fc" id="L93">        return getNumberOfScenariosWithStatus(Status.SKIPPED);</span>
+    }
+
+    private int getNumberOfScenariosWithStatus(final Status status) {
+<span class="fc" id="L97">        return reports.stream().mapToInt(</span>
+<span class="fc" id="L98">                report -&gt; (int) report.getElements().stream().filter(</span>
+<span class="fc" id="L99">                        element -&gt; element.getStatus().equals(status)</span>
+<span class="fc" id="L100">                ).count()).sum();</span>
+    }
+
+    public long getTotalDuration() {
+<span class="fc" id="L104">        return reports.stream().mapToLong(Report::getTotalDuration).sum();</span>
+    }
+
+    public String getTotalDurationString() {
+<span class="fc" id="L108">        ZonedDateTime earliestStartDateTime = getEarliestStartDateTime();</span>
+<span class="fc" id="L109">        ZonedDateTime latestEndDateTime = getLatestEndDateTime();</span>
+
+        // Return total runtime if no timestamps exist...
+<span class="pc bpc" id="L112" title="3 of 4 branches missed.">        if (earliestStartDateTime == null || latestEndDateTime == null) {</span>
+<span class="fc" id="L113">            return RenderingUtils.convertNanosecondsToTimeString(getTotalDuration());</span>
+        }
+
+        // ...else return the calculated runtime.
+<span class="nc" id="L117">        return RenderingUtils.convertNanosecondsToTimeString(</span>
+<span class="nc" id="L118">                ChronoUnit.NANOS.between(earliestStartDateTime, latestEndDateTime)</span>
+        );
+    }
+
+    private ZonedDateTime getEarliestStartDateTime() {
+<span class="fc" id="L123">        ZonedDateTime earliestStartDateTime = null;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        for (Report report : reports) {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">            for (Element element : report.getElements()) {</span>
+<span class="nc" id="L126">                ZonedDateTime currentStartDateTime = element.getStartDateTime();</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">                if (currentStartDateTime != null &amp;&amp;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                        (earliestStartDateTime == null || currentStartDateTime.isBefore(earliestStartDateTime))) {</span>
+<span class="nc" id="L129">                    earliestStartDateTime = currentStartDateTime;</span>
+                }
+<span class="nc" id="L131">            }</span>
+<span class="fc" id="L132">        }</span>
+<span class="fc" id="L133">        return earliestStartDateTime;</span>
+    }
+
+    private ZonedDateTime getLatestEndDateTime() {
+<span class="fc" id="L137">        ZonedDateTime latestEndDateTime = null;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        for (Report report : reports) {</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">            for (Element element : report.getElements()) {</span>
+<span class="nc" id="L140">                ZonedDateTime currentEndDateTime = element.getEndDateTime();</span>
+<span class="nc bnc" id="L141" title="All 4 branches missed.">                if (currentEndDateTime != null &amp;&amp;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">                        (latestEndDateTime == null || currentEndDateTime.isAfter(latestEndDateTime))) {</span>
+<span class="nc" id="L143">                    latestEndDateTime = currentEndDateTime;</span>
+                }
+<span class="nc" id="L145">            }</span>
+<span class="fc" id="L146">        }</span>
+<span class="fc" id="L147">        return latestEndDateTime;</span>
+    }
+
+    public String returnStartDateTimeString() {
+<span class="nc" id="L151">        ZonedDateTime earliestStartDateTime = getEarliestStartDateTime();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        if (earliestStartDateTime != null) {</span>
+<span class="nc" id="L153">            return RenderingUtils.convertZonedDateTimeToDateString(earliestStartDateTime) + &quot; &quot; +</span>
+<span class="nc" id="L154">                    RenderingUtils.convertZonedDateTimeToTimeString(earliestStartDateTime);</span>
+        }
+<span class="nc" id="L156">        return &quot;&quot;;</span>
+    }
+
+    public String returnEndDateTimeString() {
+<span class="nc" id="L160">        ZonedDateTime latestEndDateTime = getLatestEndDateTime();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (latestEndDateTime != null) {</span>
+<span class="nc" id="L162">            return RenderingUtils.convertZonedDateTimeToDateString(latestEndDateTime) + &quot; &quot; +</span>
+<span class="nc" id="L163">                    RenderingUtils.convertZonedDateTimeToTimeString(latestEndDateTime);</span>
+        }
+<span class="nc" id="L165">        return &quot;&quot;;</span>
+    }
+
+    public List&lt;CustomParameter&gt; getCustomParameters() {
+<span class="fc" id="L169">        return customParameters;</span>
+    }
+
+    public void setCustomParameters(final List&lt;CustomParameter&gt; customParameters) {
+<span class="fc" id="L173">        this.customParameters = customParameters;</span>
+<span class="fc" id="L174">    }</span>
+
+    public boolean hasCustomParameters() {
+<span class="pc bpc" id="L177" title="1 of 4 branches missed.">        return customParameters != null &amp;&amp; !customParameters.isEmpty();</span>
+    }
+
+    public Tag getTagFilter() {
+<span class="fc" id="L181">        return tagFilter;</span>
+    }
+
+    public void setTagFilter(final Tag tagFilter) {
+<span class="fc" id="L185">        this.tagFilter = tagFilter;</span>
+<span class="fc" id="L186">    }</span>
+
+    public Feature getFeatureFilter() {
+<span class="fc" id="L189">        return featureFilter;</span>
+    }
+
+    public void setFeatureFilter(final Feature featureFilter) {
+<span class="fc" id="L193">        this.featureFilter = featureFilter;</span>
+<span class="fc" id="L194">    }</span>
+
+    public Step getStepFilter() {
+<span class="fc" id="L197">        return stepFilter;</span>
+    }
+
+    public void setStepFilter(final Step stepFilter) {
+<span class="fc" id="L201">        this.stepFilter = stepFilter;</span>
+<span class="fc" id="L202">    }</span>
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+<span class="fc" id="L206">        final AllScenariosPageCollection clone = (AllScenariosPageCollection) super.clone();</span>
+<span class="fc" id="L207">        clone.setFeatureFilter(null);</span>
+<span class="fc" id="L208">        clone.setStepFilter(null);</span>
+<span class="fc" id="L209">        clone.setTagFilter(null);</span>
+<span class="fc" id="L210">        clone.clearReports();</span>
+<span class="fc" id="L211">        List&lt;Report&gt; clonedReports = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">        for (Report r : getReports()) {</span>
+<span class="fc" id="L213">            clonedReports.add((Report) r.clone());</span>
+<span class="fc" id="L214">        }</span>
+<span class="fc" id="L215">        clone.addReports(clonedReports);</span>
+<span class="fc" id="L216">        return clone;</span>
+    }
+
+    @Override
+    public void accept(final PageVisitor visitor) throws CluecumberPluginException {
+<span class="fc" id="L221">        visitor.visit(this);</span>
+<span class="fc" id="L222">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

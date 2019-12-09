@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AllTagsPageRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.rendering.pages.renderering</a> &gt; <span class="el_source">AllTagsPageRenderer.java</span></div><h1>AllTagsPageRenderer.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.rendering.pages.renderering;
+
+import com.trivago.cluecumberCore.constants.ChartConfiguration;
+import com.trivago.cluecumberCore.constants.Status;
+import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
+import com.trivago.cluecumberCore.json.pojo.Tag;
+import com.trivago.cluecumberCore.rendering.pages.charts.ChartJsonConverter;
+import com.trivago.cluecumberCore.rendering.pages.charts.StackedBarChartBuilder;
+import com.trivago.cluecumberCore.rendering.pages.charts.pojos.Chart;
+import com.trivago.cluecumberCore.rendering.pages.pojos.ResultCount;
+import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllTagsPageCollection;
+import freemarker.template.Template;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+@Singleton
+public class AllTagsPageRenderer extends PageRenderer {
+
+    private final ChartConfiguration chartConfiguration;
+
+    @Inject
+    public AllTagsPageRenderer(
+            final ChartJsonConverter chartJsonConverter,
+            final ChartConfiguration chartConfiguration
+    ) {
+<span class="fc" id="L46">        super(chartJsonConverter);</span>
+<span class="fc" id="L47">        this.chartConfiguration = chartConfiguration;</span>
+<span class="fc" id="L48">    }</span>
+
+    public String getRenderedContent(
+            final AllTagsPageCollection allTagsPageCollection, final Template template)
+            throws CluecumberPluginException {
+
+<span class="fc" id="L54">        addChartJsonToReportDetails(allTagsPageCollection);</span>
+<span class="fc" id="L55">        return processedContent(template, allTagsPageCollection);</span>
+    }
+
+    private void addChartJsonToReportDetails(final AllTagsPageCollection allTagsPageCollection) {
+
+<span class="fc" id="L60">        List&lt;Integer&gt; passed = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L61">        List&lt;Integer&gt; failed = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">        List&lt;Integer&gt; skipped = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L64">        int maximumNumberOfRuns = 0;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        for (Map.Entry&lt;Tag, ResultCount&gt; entry : allTagsPageCollection.getTagResultCounts().entrySet()) {</span>
+<span class="nc" id="L66">            ResultCount value = entry.getValue();</span>
+<span class="nc" id="L67">            passed.add(value.getPassed());</span>
+<span class="nc" id="L68">            failed.add(value.getFailed());</span>
+<span class="nc" id="L69">            skipped.add(value.getSkipped());</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (value.getTotal() &gt; maximumNumberOfRuns) {</span>
+<span class="nc" id="L71">                maximumNumberOfRuns = value.getTotal();</span>
+            }
+<span class="nc" id="L73">        }</span>
+
+<span class="fc" id="L75">        List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        for (Tag tag : allTagsPageCollection.getTagResultCounts().keySet()) {</span>
+<span class="nc" id="L77">            keys.add(tag.getName());</span>
+<span class="nc" id="L78">        }</span>
+
+<span class="fc" id="L80">        Chart chart =</span>
+                new StackedBarChartBuilder(chartConfiguration)
+<span class="fc" id="L82">                        .setLabels(keys)</span>
+<span class="fc" id="L83">                        .setxAxisLabel(allTagsPageCollection.getTotalNumberOfTags() + &quot; Tags&quot;)</span>
+<span class="fc" id="L84">                        .setyAxisLabel(&quot;Number of Scenarios&quot;)</span>
+<span class="fc" id="L85">                        .setyAxisStepSize(maximumNumberOfRuns)</span>
+<span class="fc" id="L86">                        .addValues(passed, Status.PASSED)</span>
+<span class="fc" id="L87">                        .addValues(failed, Status.FAILED)</span>
+<span class="fc" id="L88">                        .addValues(skipped, Status.SKIPPED)</span>
+<span class="fc" id="L89">                        .build();</span>
+
+<span class="fc" id="L91">        allTagsPageCollection.getReportDetails().setChartJson(convertChartToJson(chart));</span>
+<span class="fc" id="L92">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

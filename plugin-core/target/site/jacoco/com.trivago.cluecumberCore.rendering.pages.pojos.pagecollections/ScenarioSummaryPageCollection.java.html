@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScenarioSummaryPageCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections</a> &gt; <span class="el_source">ScenarioSummaryPageCollection.java</span></div><h1>ScenarioSummaryPageCollection.java</h1><pre class="source lang-java linenums">package com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections;
+
+import com.trivago.cluecumberCore.constants.Status;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class ScenarioSummaryPageCollection extends SummaryPageCollection {
+<span class="fc" id="L9">    private Set&lt;Integer&gt; totalFailed = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L10">    private Set&lt;Integer&gt; totalPassed = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L11">    private Set&lt;Integer&gt; totalSkipped = new HashSet&lt;&gt;();</span>
+
+    ScenarioSummaryPageCollection(final String pageTitle) {
+<span class="fc" id="L14">        super(pageTitle);</span>
+<span class="fc" id="L15">    }</span>
+
+    public int getTotalNumberOfScenarios() {
+<span class="fc" id="L18">        return getTotalNumberOfPassed() + getTotalNumberOfFailed() + getTotalNumberOfSkipped();</span>
+    }
+
+    public int getTotalNumberOfPassed() {
+<span class="fc" id="L22">        return totalPassed.size();</span>
+    }
+
+    public int getTotalNumberOfFailed() {
+<span class="fc" id="L26">        return totalFailed.size();</span>
+    }
+
+    public int getTotalNumberOfSkipped() {
+<span class="fc" id="L30">        return totalSkipped.size();</span>
+    }
+
+    public void addScenarioIndexByStatus(final Status status, final int scenarioIndex) {
+<span class="pc bpc" id="L34" title="1 of 4 branches missed.">        switch (status) {</span>
+            case FAILED:
+<span class="fc" id="L36">                totalFailed.add(scenarioIndex);</span>
+<span class="fc" id="L37">                break;</span>
+            case PASSED:
+<span class="fc" id="L39">                totalPassed.add(scenarioIndex);</span>
+<span class="fc" id="L40">                break;</span>
+            case SKIPPED:
+<span class="fc" id="L42">                totalSkipped.add(scenarioIndex);</span>
+            default:
+        }
+<span class="fc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

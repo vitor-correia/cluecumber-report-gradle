@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportJsonPostProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.json.processors</a> &gt; <span class="el_source">ReportJsonPostProcessor.java</span></div><h1>ReportJsonPostProcessor.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.json.processors;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.trivago.cluecumberCore.json.pojo.Element;
+import com.trivago.cluecumberCore.json.pojo.Report;
+import com.trivago.cluecumberCore.json.pojo.Tag;
+import io.gsonfire.PostProcessor;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+@Singleton
+public class ReportJsonPostProcessor implements PostProcessor&lt;Report&gt; {
+
+    private final List&lt;String&gt; featureUris;
+
+    @Inject
+<span class="fc" id="L39">    public ReportJsonPostProcessor() {</span>
+<span class="fc" id="L40">        featureUris = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L41">    }</span>
+
+    @Override
+    public void postDeserialize(final Report report, final JsonElement jsonElement, final Gson gson) {
+<span class="fc" id="L45">        addFeatureIndex(report);</span>
+<span class="fc" id="L46">        addFeatureInformationToScenarios(report);</span>
+<span class="fc" id="L47">        mergeBackgroundScenarios(report);</span>
+<span class="fc" id="L48">    }</span>
+
+    private void addFeatureInformationToScenarios(final Report report) {
+<span class="fc" id="L51">        List&lt;Tag&gt; reportTags = report.getTags();</span>
+<span class="fc" id="L52">        String featureName = report.getName();</span>
+<span class="fc" id="L53">        int featureIndex = report.getFeatureIndex();</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (Element element : report.getElements()) {</span>
+<span class="fc" id="L55">            element.setFeatureName(featureName);</span>
+<span class="fc" id="L56">            element.setFeatureIndex(featureIndex);</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">            if (reportTags.size() &gt; 0) {</span>
+<span class="fc" id="L58">                List&lt;Tag&gt; mergedTags = Stream.concat(element.getTags().stream(), reportTags.stream())</span>
+<span class="fc" id="L59">                        .distinct()</span>
+<span class="fc" id="L60">                        .collect(Collectors.toList());</span>
+<span class="fc" id="L61">                element.setTags(mergedTags);</span>
+            }
+<span class="fc" id="L63">        }</span>
+<span class="fc" id="L64">    }</span>
+
+    private void mergeBackgroundScenarios(final Report report) {
+<span class="fc" id="L67">        List&lt;Element&gt; cleanedUpElements = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">        Element currentBackgroundElement = null;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Element element : report.getElements()) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (element.getType().equalsIgnoreCase(&quot;background&quot;)) {</span>
+<span class="fc" id="L71">                currentBackgroundElement = element;</span>
+            } else {
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                if (currentBackgroundElement != null) {</span>
+<span class="fc" id="L74">                    element.getSteps().addAll(0, currentBackgroundElement.getSteps());</span>
+                }
+<span class="fc" id="L76">                cleanedUpElements.add(element);</span>
+            }
+<span class="fc" id="L78">        }</span>
+<span class="fc" id="L79">        report.setElements(cleanedUpElements);</span>
+<span class="fc" id="L80">    }</span>
+
+    private void addFeatureIndex(final Report report) {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (report == null) return;</span>
+
+<span class="fc" id="L85">        String featureName = report.getName();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (!featureUris.contains(featureName)) {</span>
+<span class="fc" id="L87">            featureUris.add(featureName);</span>
+        }
+<span class="fc" id="L89">        report.setFeatureIndex(featureUris.indexOf(featureName));</span>
+<span class="fc" id="L90">    }</span>
+
+    @Override
+    public void postSerialize(final JsonElement jsonElement, final Report report, final Gson gson) {
+        // not used
+<span class="fc" id="L95">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

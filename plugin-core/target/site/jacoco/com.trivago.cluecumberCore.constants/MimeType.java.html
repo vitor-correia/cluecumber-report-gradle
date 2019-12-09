@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MimeType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.constants</a> &gt; <span class="el_source">MimeType.java</span></div><h1>MimeType.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.constants;
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Enum to get all MimeTypes for embedding's.
+ */
+<span class="fc" id="L24">public enum MimeType {</span>
+<span class="fc" id="L25">	@SerializedName(&quot;image/png&quot;) </span>
+	PNG (&quot;image/png&quot;),
+<span class="fc" id="L27">	@SerializedName(&quot;image/gif&quot;) </span>
+	GIF (&quot;image/gif&quot;),
+<span class="fc" id="L29">	@SerializedName(&quot;image/bmp&quot;) </span>
+	BMP (&quot;image/bmp&quot;),
+<span class="fc" id="L31">	@SerializedName(&quot;image/jpg&quot;) </span>
+	JPG (&quot;image/jpg&quot;),	
+<span class="fc" id="L33">	@SerializedName(&quot;image/jpeg&quot;) </span>
+	JPEG (&quot;image/jpeg&quot;),
+<span class="fc" id="L35">	@SerializedName(&quot;image/svg&quot;) </span>
+	SVG (&quot;image/svg&quot;),
+<span class="fc" id="L37">	@SerializedName(&quot;image/svg+xml&quot;) </span>
+	SVG_XML (&quot;image/svg+xml&quot;),
+<span class="fc" id="L39">	@SerializedName(&quot;text/html&quot;) </span>
+	HTML (&quot;text/html&quot;),
+<span class="fc" id="L41">	@SerializedName(&quot;text/xml&quot;) </span>
+	XML (&quot;text/xml&quot;),
+<span class="fc" id="L43">	@SerializedName(&quot;application/xml&quot;) </span>
+	APPLICATION_XML (&quot;application/xml&quot;),
+<span class="fc" id="L45">	@SerializedName(&quot;application/json&quot;) </span>
+	JSON (&quot;application/json&quot;),
+<span class="fc" id="L47">	@SerializedName(&quot;text/plain&quot;) </span>
+	TXT (&quot;text/plain&quot;),
+<span class="fc" id="L49">	@SerializedName(&quot;application/pdf&quot;) </span>
+	PDF (&quot;application/pdf&quot;),
+<span class="fc" id="L51">	UNKNOWN (&quot;unknown&quot;);</span>
+	
+    private final String contentType;
+    
+<span class="fc" id="L55">    MimeType(String contentType) {</span>
+<span class="fc" id="L56">        this.contentType = contentType;</span>
+<span class="fc" id="L57">    }</span>
+ 
+    public String getContentType() {
+<span class="fc" id="L60">        return contentType;</span>
+    }    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

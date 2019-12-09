@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoggerUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.logging</a> &gt; <span class="el_source">LoggerUtils.java</span></div><h1>LoggerUtils.java</h1><pre class="source lang-java linenums">package com.trivago.cluecumberCore.logging;
+
+import javax.inject.Singleton;
+import java.util.Arrays;
+
+@Singleton
+<span class="fc" id="L7">public class LoggerUtils {</span>
+
+    private static ICluecumberLogger sLogger;
+    private static CluecumberLogLevel sCurrentLogLevel;
+
+
+    /**
+     //     * Set the mojo logger so it can be used in any class that injects a CluecumberLogger.
+     //     *
+     //     * @param logger
+     //     * @param currentLogLevel the log level that the logger should react to.
+     //     */
+    public static void initialize(ICluecumberLogger logger, final String currentLogLevel) {
+<span class="fc" id="L20">        sLogger = logger;</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (currentLogLevel == null) {</span>
+<span class="fc" id="L22">            sCurrentLogLevel = CluecumberLogLevel.DEFAULT;</span>
+<span class="fc" id="L23">            return;</span>
+        }
+
+        try {
+<span class="nc" id="L27">            sCurrentLogLevel = CluecumberLogLevel.valueOf(currentLogLevel.toUpperCase());</span>
+<span class="nc" id="L28">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L29">            sCurrentLogLevel = CluecumberLogLevel.DEFAULT;</span>
+<span class="nc" id="L30">            logger.warn(&quot;Log level &quot; + currentLogLevel + &quot; is unknown. Cluecumber will use 'default' logging.&quot;);</span>
+<span class="nc" id="L31">        }</span>
+<span class="nc" id="L32">    }</span>
+
+    public static void logInfoSeparator(final CluecumberLogLevel... cluecumberLogLevels) {
+<span class="fc" id="L35">        info(&quot;------------------------------------------------------------------------&quot;, cluecumberLogLevels);</span>
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * Info logging based on the provided Cluecumber log levels.
+     *
+     * @param logString           The {@link String} to be logged.
+     * @param cluecumberLogLevels The log levels ({@link CluecumberLogLevel} list) in which the message should be displayed.
+     */
+    public static void info(final String logString, CluecumberLogLevel... cluecumberLogLevels) {
+<span class="fc" id="L45">        log(LogLevel.INFO, logString, cluecumberLogLevels);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Warn logging. This is always displayed unless logging is off.
+     *
+     * @param logString The {@link String} to be logged.
+     */
+    public static void warn(final String logString) {
+<span class="fc" id="L54">        CluecumberLogLevel[] logLevels =</span>
+                new CluecumberLogLevel[]{CluecumberLogLevel.DEFAULT, CluecumberLogLevel.COMPACT, CluecumberLogLevel.MINIMAL};
+<span class="fc" id="L56">        log(LogLevel.WARN, logString, logLevels);</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     //     * Logs a message based on the provided log levels.
+     //     *
+     //     * @param logString           The {@link String} to be logged.
+     //     * @param CluecumberLogLevels The log levels in which the message should be displayed.
+     //     */
+    protected static void log(final LogLevel logLevel, final String logString, CluecumberLogLevel... CluecumberLogLevels) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (sCurrentLogLevel == CluecumberLogLevel.OFF) {</span>
+<span class="nc" id="L67">            return;</span>
+        }
+
+<span class="pc bpc" id="L70" title="2 of 6 branches missed.">        if (sCurrentLogLevel != null</span>
+                &amp;&amp; CluecumberLogLevels != null
+                &amp;&amp; CluecumberLogLevels.length &gt; 0
+<span class="fc" id="L73">                &amp;&amp; Arrays.stream(CluecumberLogLevels)</span>
+<span class="pc bpc" id="L74" title="2 of 4 branches missed.">                .noneMatch(CluecumberLogLevel -&gt; CluecumberLogLevel == sCurrentLogLevel)) {</span>
+<span class="nc" id="L75">            return;</span>
+        }
+<span class="pc bpc" id="L77" title="1 of 3 branches missed.">        switch (logLevel) {</span>
+            case INFO:
+<span class="fc" id="L79">                sLogger.info(logString);</span>
+<span class="fc" id="L80">                break;</span>
+            case WARN:
+<span class="fc" id="L82">                sLogger.warn(logString);</span>
+                break;
+        }
+<span class="fc" id="L85">    }</span>
+
+<span class="fc" id="L87">    public enum CluecumberLogLevel {</span>
+<span class="fc" id="L88">        DEFAULT, COMPACT, MINIMAL, OFF</span>
+    }
+
+<span class="fc" id="L91">    public enum LogLevel {</span>
+<span class="fc" id="L92">        INFO, WARN</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

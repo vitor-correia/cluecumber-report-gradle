@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Cluecumber Core</a> &gt; <a href="index.source.html" class="el_package">com.trivago.cluecumberCore.rendering</a> &gt; <span class="el_source">ReportGenerator.java</span></div><h1>ReportGenerator.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2019 trivago N.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.trivago.cluecumberCore.rendering;
+
+import com.trivago.cluecumberCore.constants.PluginSettings;
+import com.trivago.cluecumberCore.exceptions.CluecumberPluginException;
+import com.trivago.cluecumberCore.exceptions.filesystem.PathCreationException;
+import com.trivago.cluecumberCore.filesystem.FileIO;
+import com.trivago.cluecumberCore.filesystem.FileSystemManager;
+import com.trivago.cluecumberCore.properties.PropertyManager;
+import com.trivago.cluecumberCore.rendering.pages.pojos.pagecollections.AllScenariosPageCollection;
+import com.trivago.cluecumberCore.rendering.pages.renderering.CustomCssRenderer;
+import com.trivago.cluecumberCore.rendering.pages.templates.TemplateEngine;
+import com.trivago.cluecumberCore.rendering.pages.visitors.PageVisitor;
+import com.trivago.cluecumberCore.rendering.pages.visitors.VisitorDirectory;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.List;
+
+@Singleton
+public class ReportGenerator {
+    private final FileIO fileIO;
+    private final TemplateEngine templateEngine;
+    private final PropertyManager propertyManager;
+    private final FileSystemManager fileSystemManager;
+
+    private CustomCssRenderer customCssRenderer;
+    private List&lt;PageVisitor&gt; visitors;
+
+    @Inject
+    public ReportGenerator(
+            final FileIO fileIO,
+            final TemplateEngine templateEngine,
+            final PropertyManager propertyManager,
+            final FileSystemManager fileSystemManager,
+            final CustomCssRenderer customCssRenderer,
+            final VisitorDirectory visitorDirectory
+<span class="fc" id="L53">    ) {</span>
+<span class="fc" id="L54">        this.fileIO = fileIO;</span>
+<span class="fc" id="L55">        this.templateEngine = templateEngine;</span>
+<span class="fc" id="L56">        this.propertyManager = propertyManager;</span>
+<span class="fc" id="L57">        this.fileSystemManager = fileSystemManager;</span>
+<span class="fc" id="L58">        this.customCssRenderer = customCssRenderer;</span>
+
+<span class="fc" id="L60">        visitors = visitorDirectory.getVisitors();</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Generate the full report.
+     *
+     * @param allScenariosPageCollection {{@link AllScenariosPageCollection}.
+     * @throws CluecumberPluginException In case of error.
+     */
+    public void generateReport(final AllScenariosPageCollection allScenariosPageCollection) throws CluecumberPluginException {
+<span class="fc" id="L70">        String reportDirectory = propertyManager.getGeneratedHtmlReportDirectory();</span>
+<span class="fc" id="L71">        createDirectories(reportDirectory);</span>
+<span class="fc" id="L72">        copyStaticReportAssets(reportDirectory);</span>
+<span class="fc" id="L73">        copyCustomCss(reportDirectory);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (PageVisitor visitor : visitors) {</span>
+<span class="fc" id="L75">            allScenariosPageCollection.accept(visitor);</span>
+<span class="fc" id="L76">        }</span>
+<span class="fc" id="L77">    }</span>
+
+    /**
+     * Create all needed sub directories in the specified target directory.
+     *
+     * @throws PathCreationException The {@link PathCreationException}.
+     */
+    private void createDirectories(final String reportDirectory) throws PathCreationException {
+<span class="fc" id="L85">        fileSystemManager.createDirectory(reportDirectory);</span>
+<span class="fc" id="L86">        fileSystemManager.createDirectory(</span>
+<span class="fc" id="L87">                propertyManager.getGeneratedHtmlReportDirectory() + &quot;/&quot; + PluginSettings.PAGES_DIRECTORY);</span>
+<span class="fc" id="L88">        fileSystemManager.createDirectory(reportDirectory + &quot;/&quot; + PluginSettings.PAGES_DIRECTORY + &quot;/&quot; + PluginSettings.SCENARIO_DETAIL_PAGE_PATH);</span>
+<span class="fc" id="L89">        fileSystemManager.createDirectory(reportDirectory + &quot;/&quot; + PluginSettings.PAGES_DIRECTORY + &quot;/&quot; + PluginSettings.FEATURE_SCENARIOS_PAGE_PATH);</span>
+<span class="fc" id="L90">        fileSystemManager.createDirectory(reportDirectory + &quot;/&quot; + PluginSettings.PAGES_DIRECTORY + &quot;/&quot; + PluginSettings.TAG_SCENARIO_PAGE_PATH);</span>
+<span class="fc" id="L91">        fileSystemManager.createDirectory(reportDirectory + &quot;/&quot; + PluginSettings.PAGES_DIRECTORY + &quot;/&quot; + PluginSettings.STEP_SCENARIO_PAGE_PATH);</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Render and copy custom css assets to the specified target directory.
+     *
+     * @throws CluecumberPluginException The {@link CluecumberPluginException}.
+     */
+    private void copyCustomCss(final String reportDirectory) throws CluecumberPluginException {
+        // Either use the specified custom CSS file or the empty cluecumber-additional.css file that comes with Cluecumber
+<span class="fc" id="L101">        String customCss = propertyManager.getCustomCssFile();</span>
+<span class="pc bpc" id="L102" title="3 of 4 branches missed.">        if (customCss != null &amp;&amp; !customCss.isEmpty()) {</span>
+<span class="nc" id="L103">            fileSystemManager.copyResource(customCss, reportDirectory + &quot;/css/cluecumber-additional.css&quot;);</span>
+        } else {
+<span class="fc" id="L105">            copyFileFromJarToReportDirectory(&quot;/css/cluecumber-additional.css&quot;);</span>
+        }
+
+        // Render the custom-css.ftl and copy it to the css directory
+<span class="fc" id="L109">        fileIO.writeContentToFile(customCssRenderer.getRenderedCustomCssContent(</span>
+<span class="fc" id="L110">                templateEngine.getTemplate(TemplateEngine.Template.CUSTOM_CSS)</span>
+        ), reportDirectory + &quot;/css/cluecumber-custom.css&quot;);
+<span class="fc" id="L112">    }</span>
+
+    /**
+     * Copy all needed static report assets to the specified target directory.
+     *
+     * @throws CluecumberPluginException The {@link CluecumberPluginException}.
+     */
+    private void copyStaticReportAssets(final String reportDirectory) throws CluecumberPluginException {
+        // Copy CSS resources
+<span class="fc" id="L121">        fileSystemManager.createDirectory(reportDirectory + &quot;/css&quot;);</span>
+<span class="fc" id="L122">        copyFileFromJarToReportDirectory(&quot;/css/bootstrap.min.css&quot;);</span>
+<span class="fc" id="L123">        copyFileFromJarToReportDirectory(&quot;/css/cluecumber.css&quot;);</span>
+<span class="fc" id="L124">        copyFileFromJarToReportDirectory(&quot;/css/datatables.min.css&quot;);</span>
+<span class="fc" id="L125">        copyFileFromJarToReportDirectory(&quot;/css/jquery.fancybox.min.css&quot;);</span>
+<span class="fc" id="L126">        copyFileFromJarToReportDirectory(&quot;/css/dataTables.bootstrap4.min.css&quot;);</span>
+
+        // Copy webfont resources
+<span class="fc" id="L129">        fileSystemManager.createDirectory(reportDirectory + &quot;/font&quot;);</span>
+<span class="fc" id="L130">        copyFileFromJarToReportDirectory(&quot;/font/cluecumber.eot&quot;);</span>
+<span class="fc" id="L131">        copyFileFromJarToReportDirectory(&quot;/font/cluecumber.svg&quot;);</span>
+<span class="fc" id="L132">        copyFileFromJarToReportDirectory(&quot;/font/cluecumber.ttf&quot;);</span>
+<span class="fc" id="L133">        copyFileFromJarToReportDirectory(&quot;/font/cluecumber.woff&quot;);</span>
+<span class="fc" id="L134">        copyFileFromJarToReportDirectory(&quot;/font/cluecumber.woff2&quot;);</span>
+
+        // Copy Javascript resources
+<span class="fc" id="L137">        fileSystemManager.createDirectory(reportDirectory + &quot;/js&quot;);</span>
+<span class="fc" id="L138">        copyFileFromJarToReportDirectory(&quot;/js/jquery.min.js&quot;);</span>
+<span class="fc" id="L139">        copyFileFromJarToReportDirectory(&quot;/js/bootstrap.min.js&quot;);</span>
+<span class="fc" id="L140">        copyFileFromJarToReportDirectory(&quot;/js/popper.min.js&quot;);</span>
+<span class="fc" id="L141">        copyFileFromJarToReportDirectory(&quot;/js/Chart.bundle.min.js&quot;);</span>
+<span class="fc" id="L142">        copyFileFromJarToReportDirectory(&quot;/js/datatables.min.js&quot;);</span>
+<span class="fc" id="L143">        copyFileFromJarToReportDirectory(&quot;/js/jquery.fancybox.min.js&quot;);</span>
+<span class="fc" id="L144">    }</span>
+
+    /**
+     * Copy a specific resource from the jar file to the report directory.
+     *
+     * @param fileName The file name of the source inside of the jar.
+     * @throws CluecumberPluginException The {@link CluecumberPluginException}.
+     */
+    private void copyFileFromJarToReportDirectory(final String fileName) throws CluecumberPluginException {
+<span class="fc" id="L153">        fileSystemManager.copyResourceFromJar(</span>
+                PluginSettings.BASE_TEMPLATE_PATH + fileName,
+<span class="fc" id="L155">                propertyManager.getGeneratedHtmlReportDirectory() + fileName);</span>
+<span class="fc" id="L156">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
